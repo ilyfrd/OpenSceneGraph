@@ -25,6 +25,7 @@
 
 namespace osg {
 
+// 此Stats跟渲染管线状态机没有关系，它表示渲染过程中任何程序想要记录的数据。
 class OSG_EXPORT Stats : public osg::Referenced
 {
     public:
@@ -112,10 +113,10 @@ class OSG_EXPORT Stats : public osg::Referenced
         unsigned int        _baseFrameNumber;
         unsigned int        _latestFrameNumber;
 
-        AttributeMapList    _attributeMapList;
-        AttributeMap        _invalidAttributeMap;
+        AttributeMapList    _attributeMapList; // 每一帧都对应一个AttributeMap。
+        AttributeMap        _invalidAttributeMap; // 当想要查找的frameNumber不在_attributeMapList中时，采用该AttributeMap。
 
-        CollectMap          _collectMap;
+        CollectMap          _collectMap; // 表示是否记录某个stat数据。
 
 };
 

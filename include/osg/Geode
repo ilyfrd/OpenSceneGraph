@@ -97,13 +97,13 @@ class OSG_EXPORT Geode : public Group
         */
         inline unsigned int getNumDrawables() const { return getNumChildren(); }
 
-        /** Return the \c Drawable at position \c i.*/
+        /** Return the \c Drawable at position \c i. */
         inline Drawable* getDrawable( unsigned int i ) { return _children[i].valid() ? _children[i]->asDrawable() : 0; }
 
-        /** Return the \c Drawable at position \c i.*/
+        /** Return the \c Drawable at position \c i. */
         inline const Drawable* getDrawable( unsigned int i ) const { return _children[i].valid() ? _children[i]->asDrawable() : 0;  }
 
-        /** Return \c true if a given \c Drawable is contained within \c Geode.*/
+        /** Return \c true if a given \c Drawable is contained within \c Geode. */
         inline bool containsDrawable(const Drawable* drawable) const
         {
             for (NodeList::const_iterator itr=_children.begin();

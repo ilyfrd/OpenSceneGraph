@@ -222,9 +222,9 @@ class OSG_EXPORT Array : public BufferData
 
         virtual ~Array() {}
 
-        Type    _arrayType;
-        GLint   _dataSize;
-        GLenum  _dataType;
+        Type    _arrayType; // 决定单个元素的结构，例如vec3、mat4等。
+        GLint   _dataSize; // 决定元素数量。
+        GLenum  _dataType; // 决定数值类型，例如GL_FLOAT。
         Binding _binding;
         bool    _normalize;
         bool    _preserveDataType;

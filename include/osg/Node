@@ -497,7 +497,7 @@ class OSG_EXPORT Node : public Object
         virtual ~Node();
 
 
-
+        // 每一个 Node 都有一个 BoundingSphere。
         BoundingSphere                          _initialBound;
         ref_ptr<ComputeBoundingSphereCallback>  _computeBoundCallback;
         mutable BoundingSphere                  _boundingSphere;
@@ -506,6 +506,11 @@ class OSG_EXPORT Node : public Object
         void addParent(osg::Group* parent);
         void removeParent(osg::Group* parent);
 
+        /*
+        * Node是叶节点，它只有parents，没有children。
+        * 非叶节点用Group表示，一个Group包含多个Node。
+        * 同一个Node可能被多个Group引用，所以可能有多个parents。
+        */
         ParentList _parents;
         friend class osg::Group;
         friend class osg::Drawable;
@@ -530,7 +535,7 @@ class OSG_EXPORT Node : public Object
 
         NodeMask _nodeMask;
 
-        ref_ptr<StateSet> _stateset;
+        ref_ptr<StateSet> _stateset; // 每一个 Node 都对应一个 StateSet。 
 
 };
 

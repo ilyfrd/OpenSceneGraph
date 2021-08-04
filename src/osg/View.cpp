@@ -151,6 +151,10 @@ void View::Slave::updateSlaveImplementation(View& view)
 
     if (_camera->getReferenceFrame()==osg::Transform::RELATIVE_RF)
     {
+        /*把slave camera的 view matrix和projection matrix设置成master camera与offset的累乘。
+        * 也就是说，slave camera的view matrix和projection matrix是相对master camera的，
+        * 但是其SceneData却从自己而来，不从master camera而来。
+        */
         _camera->setProjectionMatrix(view.getCamera()->getProjectionMatrix() * _projectionOffset);
         _camera->setViewMatrix(view.getCamera()->getViewMatrix() * _viewOffset);
     }
@@ -161,10 +165,14 @@ void View::Slave::updateSlaveImplementation(View& view)
 bool View::addSlave(osg::Camera* camera, const osg::Matrix& projectionOffset, const osg::Matrix& viewOffset, bool useMastersSceneData)
 {
     if (!camera) return false;
-
+    /*
+    * 设置 slave camera所属的View，在这里建立双向联系，
+    * 即View添加了该Camera为其 slave camera，
+    * 而该slave camera也标记其所属的 View为该 View。
+    */
     camera->setView(this);
 
-
+    // 当_useMastersSceneData为true时，master camera _camera的值填充进Slave中的camera。
     if (useMastersSceneData)
     {
         camera->removeChildren(0,camera->getNumChildren());
@@ -179,7 +187,7 @@ bool View::addSlave(osg::Camera* camera, const osg::Matrix& projectionOffset, co
     }
 
     unsigned int i = _slaves.size();
-
+    // 说明Slave中的Camera并不是master camera。
     _slaves.push_back(Slave(camera, projectionOffset, viewOffset, useMastersSceneData));
     _slaves[i].updateSlave(*this);
 

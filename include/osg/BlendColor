@@ -53,7 +53,7 @@ class OSG_EXPORT BlendColor : public StateAttribute
 
         virtual bool getModeUsage(StateAttribute::ModeUsage& usage) const
         {
-            usage.usesMode(GL_BLEND);
+            usage.usesMode(GL_BLEND); // 要想设置blend color，首先必须启用blend mode。
             return true;
         }
 

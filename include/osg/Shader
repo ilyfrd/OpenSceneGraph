@@ -253,6 +253,7 @@ class OSG_EXPORT Shader : public osg::Object
         class OSG_EXPORT PerContextShader : public osg::Referenced
         {
             public:
+                // 在shader和context之间建立联系，即该shader在该context下使用。
                 PerContextShader(const Shader* shader, unsigned int contextID);
 
                 void setDefineString(const std::string& defStr) { _defineStr = defStr; }
@@ -283,10 +284,10 @@ class OSG_EXPORT Shader : public osg::Object
                 osg::ref_ptr<osg::GLExtensions> _extensions;
 
                 /** Handle to the actual glShader. */
-                GLuint _glShaderHandle;
+                GLuint _glShaderHandle; // glCreateShader所产生的ID。
 
                 /** Define string passed on to Shaders to help configure them.*/
-                std::string _defineStr;
+                std::string _defineStr; // 相当于该PerContextShader的ID，外部代码据此在众多PerContextShader中找到该PerContextShader。
 
                 /** Does our glShader need to be recompiled? */
                 bool _needsCompile;
@@ -309,6 +310,11 @@ class OSG_EXPORT Shader : public osg::Object
 
             ShaderObjects(const Shader* shader, unsigned int contextID);
 
+            /*
+            *因为是struct，所以_contextID和_shader变量都可在外部代码中直接指定，
+            *然后createPerContextShader()函数据此创建新的PerContextShader，
+            *一个ShaderObjects保存多份PerContextShader，在_perContextShaders变量中。
+            */
             unsigned int        _contextID;
             const Shader*       _shader;
             mutable PerContextShaders  _perContextShaders;
@@ -337,12 +343,17 @@ class OSG_EXPORT Shader : public osg::Object
         std::string                     _shaderFileName;
         std::string                     _shaderSource;
         osg::ref_ptr<ShaderBinary>      _shaderBinary;
-
+        // 给当前shader注入其它代码，参考addCodeInjection()函数处的说明。
         CodeInjectionMap                _codeInjectionMap;
 
+        // ShaderDefines variables
+        ShaderDefinesMode               _shaderDefinesMode;
         // ShaderPragmas variables
         ShaderPragmaMode                _shaderPragmaMode;
         ShaderPragmas                   _shaderPragmas;
+        // _shaderSource中定义的所有defines都会保存到这里，参考_parseShaderDefines()函数。
+        ShaderDefines                   _shaderDefines;
+        ShaderDefines                   _shaderRequirements;
 
         /** osg::Programs that this osg::Shader is attached to */
         typedef std::set< osg::Program* > ProgramSet;

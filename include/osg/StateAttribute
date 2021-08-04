@@ -376,7 +376,7 @@ class OSG_EXPORT StateAttribute : public Object
         void addParent(osg::StateSet* object);
         void removeParent(osg::StateSet* object);
 
-        ParentList _parents;
+        ParentList _parents; // 本StateAttribute将继承_parents中的所有StateSet。
         friend class osg::StateSet;
 
         /** Helper class that make is easy to handle changes in a member value.*/
@@ -393,7 +393,7 @@ class OSG_EXPORT StateAttribute : public Object
         };
 
 
-        ref_ptr<ShaderComponent>          _shaderComponent;
+        ref_ptr<ShaderComponent>          _shaderComponent; // 渲染所使用的shader也可当成一种state。
 
         ref_ptr<StateAttributeCallback>   _updateCallback;
         ref_ptr<StateAttributeCallback>   _eventCallback;

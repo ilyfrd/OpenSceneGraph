@@ -56,6 +56,9 @@ class OSG_EXPORT BufferIndexBinding : public StateAttribute
     inline void setBufferData(BufferData *bufferdata) {
         if (_bufferData.valid())
         {
+            /*
+            * 本client切换了所引用的BufferData，因此原引用BufferData需要移除本client的引用。
+            */
             _bufferData->removeClient(this);
         }
 
@@ -102,8 +105,8 @@ class OSG_EXPORT BufferIndexBinding : public StateAttribute
     /*const*/ GLenum _target;
     ref_ptr<BufferData> _bufferData;
     GLuint _index;
-    GLintptr _offset;
-    GLsizeiptr _size;
+    GLintptr _offset; // 标记_bufferData中要使用的数据的起始位置，参考apply()成员函数。
+    GLsizeiptr _size; // _bufferData 的整体大小，参考 setBufferData() 成员函数函数。
 };
 
 /** StateAttribute for binding a uniform buffer index target.

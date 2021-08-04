@@ -560,13 +560,17 @@ class OSG_EXPORT StateSet : public Object
         void addParent(osg::Node* object);
         void removeParent(osg::Node* object);
 
+        /*
+        *_parents中的所有Node都采用本StateSet，
+        *当本StateSet发生改变时，_parents中的所有Node都要更新，参考setUpdateCallback()和setEventCallback()函数。
+        */
         ParentList _parents;
         friend class osg::Node;
         friend class osg::Drawable;
         friend class osg::Uniform;
         friend class osg::UniformBase;
         friend class osg::StateAttribute;
-
+        // 渲染一个物体需要设置需要用到的Modes Attributes Textures Uniforms Defines
         ModeList                            _modeList;
         AttributeList                       _attributeList;
 

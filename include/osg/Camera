@@ -875,7 +875,7 @@ class OSG_EXPORT Camera : public Transform, public CullSettings
         GLenum                              _readBuffer;
 
         RenderTargetImplementation          _renderTargetImplementation;
-        RenderTargetImplementation          _renderTargetFallback;
+        RenderTargetImplementation          _renderTargetFallback; // 当上面的render target isn't available时采用。
         BufferAttachmentMap                 _bufferAttachmentMap;
         ImplicitBufferAttachmentMask        _implicitBufferAttachmentRenderMask;
         ImplicitBufferAttachmentMask        _implicitBufferAttachmentResolveMask;

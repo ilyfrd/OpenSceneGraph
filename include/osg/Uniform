@@ -642,12 +642,19 @@ class OSG_EXPORT Uniform : public UniformBase
         bool isScalar() const { return _numElements==1; }
         void allocateDataArray();
 
-        Type                 _type;
-        unsigned int         _numElements;
+        void addParent(osg::StateSet* object);
+        void removeParent(osg::StateSet* object);
 
+        ParentList _parents;
+        friend class osg::StateSet;
+
+        Type                 _type; // 单个元素的类型，比如float vec2 mat3等。
+        unsigned int         _numElements; // 一共有多少个_type类型的元素。
+        unsigned int         _nameID;
 
         // The internal data for osg::Uniforms are stored as an array of
         // getInternalArrayType() of length getInternalArrayNumElements().
+        // 保存uniform值的地方。
         ref_ptr<FloatArray>  _floatArray;
         ref_ptr<DoubleArray> _doubleArray;
         ref_ptr<IntArray>    _intArray;

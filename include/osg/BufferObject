@@ -208,9 +208,9 @@ class OSG_EXPORT GLBufferObject : public GraphicsObject
 
             unsigned int        numRead;
             unsigned int        modifiedCount;
-            unsigned int        dataSize;
-            unsigned int        offset;
-            BufferData*         dataSource;
+            unsigned int        dataSize; //描述该BufferData在GPU buffer object中所占的大小。
+            unsigned int        offset; //描述该BufferData在GPU buffer object中的起始位置。
+            BufferData*         dataSource; //CPU端数据源。
         };
 
         inline unsigned int getContextID() const { return _contextID; }
@@ -261,14 +261,15 @@ class OSG_EXPORT GLBufferObject : public GraphicsObject
         }
 
         unsigned int            _contextID;
-        GLuint                  _glObjectID;
+        GLuint                  _glObjectID; // 该GPU buffer object所对应的ID。
 
-        BufferObjectProfile     _profile;
+        BufferObjectProfile     _profile; // 该GPU buffer object的属性。
         unsigned int            _allocatedSize;
 
         bool                    _dirty;
 
         typedef std::vector<BufferEntry> BufferEntries;
+        //该GLBufferObject所对应的BufferObject有多少个BufferData，这里就对应有多少个BufferEntry。
         BufferEntries           _bufferEntries;
 
         BufferObject*           _bufferObject;
@@ -505,10 +506,11 @@ class OSG_EXPORT BufferObject : public Object
         bool                    _copyDataAndReleaseGLBufferObject;
 
         BufferDataList          _bufferDataList;
-
+        // 每一个GLBufferObject都有context number个版本。
         mutable GLBufferObjects _glBufferObjects;
 };
 
+// BufferData是一个纯虚类，具体数据在其继承类中定义。
 class OSG_EXPORT BufferData : public Object
 {
     public:
@@ -607,7 +609,7 @@ protected:
         osg::ref_ptr<BufferObject>      _bufferObject;
         osg::ref_ptr<ModifiedCallback>  _modifiedCallback;
 
-        unsigned int _numClients;
+        unsigned int _numClients; // 有多少个地方引用该BufferData。
 };
 
 

@@ -94,11 +94,15 @@ void GLBufferObject::setBufferObject(BufferObject* bufferObject)
 
 void GLBufferObject::assign(BufferObject* bufferObject)
 {
-    _bufferObject = bufferObject;
+    _bufferObject = bufferObject; // 记录该GLBufferObject所对应的BufferObject。
 
     if (_bufferObject)
     {
-        _profile = bufferObject->getProfile();
+        /*
+        *BufferObject BufferObjectProfile信息传递给了 GLBufferObject，
+        *GLBufferObject 据此在GPU上创建相应的GPU buffer object。
+        */
+        _profile = bufferObject->getProfile(); 
 
         _dirty = true;
 
@@ -1319,6 +1323,7 @@ void BufferData::setBufferObject(BufferObject* bufferObject)
     }
 
     _bufferObject = bufferObject;
+    // 把本BufferData的数据挂到新BufferObject上。
     _bufferIndex = _bufferObject.valid() ? _bufferObject->addBufferData(this) : 0;
 }
 
