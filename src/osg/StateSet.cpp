@@ -1078,7 +1078,7 @@ void StateSet::setMode(StateAttribute::GLMode mode, StateAttribute::GLModeValue 
     }
     else
     {
-        setMode(_modeList,mode,value);
+        setMode(_modeList,mode,value); // 跟进去看，会发现_modeList中没有定义的mode是从parent继承来的。
     }
 }
 

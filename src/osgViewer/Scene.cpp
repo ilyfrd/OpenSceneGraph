@@ -22,6 +22,7 @@ namespace osgViewer
 
 
 struct SceneSingleton
+
 {
     SceneSingleton() {}
 

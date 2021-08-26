@@ -192,23 +192,23 @@ class OSG_EXPORT VertexArrayState : public osg::Referenced
 
         bool                            _isVertexBufferObjectSupported;
 
-        GLuint                          _vertexArrayObject;
+        GLuint                          _vertexArrayObject; // 对应OpenGL中的VAO。
 
 
-        osg::ref_ptr<ArrayDispatch>     _vertexArray;
-        osg::ref_ptr<ArrayDispatch>     _normalArray;
+        osg::ref_ptr<ArrayDispatch>     _vertexArray; // CPU端存放vertex position数据的地方。
+        osg::ref_ptr<ArrayDispatch>     _normalArray; // CPU端存放vertex normal数据的地方，以下类推。
         osg::ref_ptr<ArrayDispatch>     _colorArray;
         osg::ref_ptr<ArrayDispatch>     _secondaryColorArray;
         osg::ref_ptr<ArrayDispatch>     _fogCoordArray;
-        ArrayDispatchList               _texCoordArrays;
+        ArrayDispatchList               _texCoordArrays; // texture有多个单元（一般支持至少8个texture单元），所以texture数据用list保存。
         ArrayDispatchList               _vertexAttribArrays;
 
         typedef std::vector<ArrayDispatch*> ActiveDispatchers;
         ActiveDispatchers               _activeDispatchers;
         ActiveDispatchers               _previous_activeDispatchers;
 
-        GLBufferObject*                 _currentVBO;
-        GLBufferObject*                 _currentEBO;
+        GLBufferObject*                 _currentVBO; // 对应OpenGL中的VBO。
+        GLBufferObject*                 _currentEBO; // 对应OpenGL中的EBO。
 
         bool                            _requiresSetArrays;
 };

@@ -224,13 +224,13 @@ class OSG_EXPORT VertexProgram : public StateAttribute
         virtual ~VertexProgram();
 
         typedef buffered_value<GLuint> VertexProgramIDList;
-        mutable VertexProgramIDList _vertexProgramIDList;
+        mutable VertexProgramIDList _vertexProgramIDList; // 存放的是vertex program的id，一个context对应一个vertex program id。
 
         std::string     _vertexProgram;
 
-        LocalParamList  _programLocalParameters;
+        LocalParamList  _programLocalParameters; // vertex shader中的局部变量。
 
-        MatrixList  _matrixList;
+        MatrixList  _matrixList; // model mode matrix, view mode matrix , projection mode matrix.
 };
 
 }

@@ -289,7 +289,7 @@ void Referenced::signalObserversAndDelete(bool signalDelete, bool doDelete) cons
             OSG_NOTICE<<"Warning Referenced::signalObserversAndDelete(,,) doing delete with _refCount="<<_refCount<<std::endl;
 
         if (getDeleteHandler()) deleteUsingDeleteHandler();
-        else delete this;
+        else delete this; // signalObserversAndDelete()函数只在Referenced的析构函数中被调用。
     }
 }
 

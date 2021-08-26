@@ -66,7 +66,7 @@ class OSGVIEWER_EXPORT Scene : public osg::Referenced
 
         friend class View;
 
-        osg::ref_ptr<osg::Node>             _sceneData;
+        osg::ref_ptr<osg::Node>             _sceneData; // 一个scene对应一个根节点。
 
         osg::ref_ptr<osgDB::DatabasePager>  _databasePager;
         osg::ref_ptr<osgDB::ImagePager>     _imagePager;

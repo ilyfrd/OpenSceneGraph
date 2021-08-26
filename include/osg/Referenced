@@ -130,7 +130,7 @@ public:
 
         /** Set a DeleteHandler to which deletion of all referenced counted objects
           * will be delegated.*/
-        static void setDeleteHandler(DeleteHandler* handler);
+        static void setDeleteHandler(DeleteHandler* handler); // DeleteHandler提供的功能是延迟X帧删除对象，这种处理是全局性的，所以只需要一个全局性的DeleteHandler即可。
 
         /** Get a DeleteHandler.*/
         static DeleteHandler* getDeleteHandler();
@@ -145,9 +145,9 @@ public:
         void deleteUsingDeleteHandler() const;
 
 #if defined(_OSG_REFERENCED_USE_ATOMIC_OPERATIONS)
-        mutable OpenThreads::AtomicPtr  _observerSet;
+        mutable OpenThreads::AtomicPtr  _observerSet; // _observerSet记录有多少个其它对象在关注该对象。
 
-        mutable OpenThreads::Atomic     _refCount;
+        mutable OpenThreads::Atomic     _refCount; // _refCount记录该对象有多少个实例。
 #else
 
         mutable OpenThreads::Mutex*     _refMutex;

@@ -55,16 +55,16 @@ void Object::setUserDataContainer(osg::UserDataContainer* udc)
 {
     if (_userDataContainer == udc) return;
 
-    if (_userDataContainer) _userDataContainer->unref();
+    if (_userDataContainer) _userDataContainer->unref(); // 此处主动调用unref()。
 
     _userDataContainer = udc;
 
-    if (_userDataContainer) _userDataContainer->ref();
+    if (_userDataContainer) _userDataContainer->ref(); // 此处主动调用ref()。
 }
 
 osg::UserDataContainer* Object::getOrCreateUserDataContainer()
 {
-    if (!_userDataContainer) setUserDataContainer(new DefaultUserDataContainer());
+    if (!_userDataContainer) setUserDataContainer(new DefaultUserDataContainer()); // 此处传入一个new的对象。
     return _userDataContainer;
 }
 

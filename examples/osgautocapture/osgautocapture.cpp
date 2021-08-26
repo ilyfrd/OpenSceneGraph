@@ -248,7 +248,7 @@ int main( int argc, char **argv )
             //viewer would use fullscreen size (unknown here) pbuffer will use 4096 x4096 (or best available)
             traits->width = 1 << 12;
             traits->height = 1 << 12;
-            traits->pbuffer = true;
+            traits->pbuffer = true; // pbuffer的使用场景参考Win32WindowingSystem::createGraphicsContext()函数。
             traits->readDISPLAY();
             traits->setUndefinedScreenDetailsToDefaultScreen();
         }

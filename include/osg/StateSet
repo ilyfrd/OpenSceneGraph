@@ -160,7 +160,7 @@ class OSG_EXPORT StateSet : public Object
 
 
         /** Simple pairing between an attribute and its override flag.*/
-        typedef std::pair<ref_ptr<StateAttribute>,StateAttribute::OverrideValue>    RefAttributePair;
+        typedef std::pair<ref_ptr<StateAttribute>,StateAttribute::OverrideValue>    RefAttributePair; //StateAttribute对象记录相关值，OverrideValue记录以什么样的方式对待这些值。
 
         /** a container to map <StateAttribyte::Types,Member> to their respective RefAttributePair.*/
         typedef std::map<StateAttribute::TypeMemberPair,RefAttributePair>           AttributeList;
@@ -571,9 +571,11 @@ class OSG_EXPORT StateSet : public Object
         friend class osg::UniformBase;
         friend class osg::StateAttribute;
         // 渲染一个物体需要设置需要用到的Modes Attributes Textures Uniforms Defines
-        ModeList                            _modeList;
+        // 这里的mode和attribute是全局的。
+        ModeList                            _modeList; 
         AttributeList                       _attributeList;
 
+        // 假设一共支持8个texture unit， 那么每一个texture unit都对应一套mode和attribute。
         TextureModeList                     _textureModeList;
         TextureAttributeList                _textureAttributeList;
 

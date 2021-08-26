@@ -605,8 +605,8 @@ protected:
 
         unsigned int                    _modifiedCount;
 
-        unsigned int                    _bufferIndex;
-        osg::ref_ptr<BufferObject>      _bufferObject;
+        unsigned int                    _bufferIndex; // 该BufferData在其所隶属的BufferObject的成员变量_bufferDataList中的index值
+        osg::ref_ptr<BufferObject>      _bufferObject; // 该BufferData所隶属的BufferObject
         osg::ref_ptr<ModifiedCallback>  _modifiedCallback;
 
         unsigned int _numClients; // 有多少个地方引用该BufferData。
